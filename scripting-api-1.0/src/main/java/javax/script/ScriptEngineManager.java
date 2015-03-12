@@ -22,7 +22,7 @@ import java.net.URL;
 import java.util.*;
 
 public class ScriptEngineManager {
-	
+
     private final Set engineSpis = new HashSet();
     private final Map<String, ScriptEngineFactory> byName = new HashMap<String, ScriptEngineFactory>();
     private final Map<String, ScriptEngineFactory> registeredByName = new HashMap();
@@ -35,11 +35,11 @@ public class ScriptEngineManager {
 	public ScriptEngineManager() {
 		this(Thread.currentThread().getContextClassLoader());
 	}
-	
+
 	public ScriptEngineManager(ClassLoader classLoader) {
         try
         {
-            for (Enumeration factoryResources = classLoader.getResources("META-INF/services/javax.script.ScriptEngineFactory"); 
+            for (Enumeration factoryResources = classLoader.getResources("META-INF/services/javax.script.ScriptEngineFactory");
 				 factoryResources.hasMoreElements();) {
                 URL url = (URL) factoryResources.nextElement();
 				for (String className : getClassNames(url)) {
@@ -59,15 +59,15 @@ public class ScriptEngineManager {
 							}
                             engineSpis.add(factory);
                         }
-                    } catch(ClassNotFoundException doNothing) { 
-					} catch(IllegalAccessException doNothing) { 
-					} catch(InstantiationException doNothing) { 
-					} catch(LinkageError doNothing) { 
-					} catch(AnnotationFormatError doNothing) { 
+                    } catch(ClassNotFoundException doNothing) {
+					} catch(IllegalAccessException doNothing) {
+					} catch(InstantiationException doNothing) {
+					} catch(LinkageError doNothing) {
+					} catch(AnnotationFormatError doNothing) {
 					}
                 }
             }
-        } catch(IOException doNothing) { 
+        } catch(IOException doNothing) {
 		}
 	}
 
@@ -77,6 +77,15 @@ public class ScriptEngineManager {
 
     public void setGlobalScope(Bindings globalScope) {
         this.globalScope = globalScope;
+    }
+
+    // Added JSR 223 API
+    public Bindings getBindings() {
+        return getGlobalScope();
+    }
+
+    public void setBinding(Bindings bindings) {
+        setGlobalScope(bindings);
     }
 
     public void put(String key, Object value) {
@@ -214,7 +223,7 @@ public class ScriptEngineManager {
 				}
                 stack.push(line.trim());
             }
-        } catch(IOException doNothing) { 
+        } catch(IOException doNothing) {
 		}
         return stack;
     }
