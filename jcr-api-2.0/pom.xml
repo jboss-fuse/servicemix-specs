@@ -51,6 +51,7 @@
                         <Bundle-Description>${project.description}</Bundle-Description>
                         <Export-Package>javax.jcr*;version=2.0;-split-package:=merge-first;-noimport:=true</Export-Package>
                         <Import-Package>*</Import-Package>
+                        <Private-Package></Private-Package>
                         <Implementation-Title>Apache ServiceMix</Implementation-Title>
                         <Implementation-Version>${project.version}</Implementation-Version>
                     </instructions>
