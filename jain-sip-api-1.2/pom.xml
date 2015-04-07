@@ -24,13 +24,13 @@
     <parent>
         <groupId>org.apache.servicemix.specs</groupId>
         <artifactId>specs</artifactId>
-        <version>2.5-SNAPSHOT</version>
+        <version>2.6-SNAPSHOT</version>
     </parent>
 
     <groupId>org.apache.servicemix.specs</groupId>
     <artifactId>org.apache.servicemix.specs.jain-sip-api-1.2</artifactId>
     <packaging>bundle</packaging>
-    <version>2.5-SNAPSHOT</version>
+    <version>2.6-SNAPSHOT</version>
     <name>Apache ServiceMix :: Specs :: SIP API 1.2</name>
 
     <repositories>
@@ -62,7 +62,7 @@
                         <Bundle-Description>${project.description}</Bundle-Description>
                         <Export-Package>javax.sip*;version=1.2;-split-package:=merge-first;-noimport:=true</Export-Package>
                         <Import-Package>*</Import-Package>
-                        <Private-Package></Private-Package>
+                        <Private-Package />
                         <Implementation-Title>Apache ServiceMix</Implementation-Title>
                         <Implementation-Version>${project.version}</Implementation-Version>
                     </instructions>
