@@ -27,6 +27,7 @@ import java.io.InputStreamReader;
 import java.io.FileReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.StringReader;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.StringTokenizer;
@@ -122,7 +123,7 @@ public class MimetypesFileTypeMap extends FileTypeMap {
         try {
             String line;
             while ((line = reader.readLine()) != null) {
-                addMimeTypes(line);
+                addMimeTypesOneLine(line);
             }
             reader.close();
         } catch (IOException e) {
@@ -148,11 +149,11 @@ public class MimetypesFileTypeMap extends FileTypeMap {
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         String line;
         while ((line = reader.readLine()) != null) {
-            addMimeTypes(line);
+            addMimeTypesOneLine(line);
         }
     }
 
-    public synchronized void addMimeTypes(String mime_types) {
+    private synchronized void addMimeTypesOneLine(String mime_types) {
         int hashPos = mime_types.indexOf('#');
         if (hashPos != -1) {
             mime_types = mime_types.substring(0, hashPos);
@@ -167,6 +168,24 @@ public class MimetypesFileTypeMap extends FileTypeMap {
             types.put(fileType, contentType);
         }
     }
+    
+    public synchronized void addMimeTypes(String mime_types) {
+        BufferedReader reader = new BufferedReader(new StringReader(mime_types));
+        try {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                addMimeTypesOneLine(line);
+            }
+            reader.close();
+        } catch (IOException e) {
+            try {
+                reader.close();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
+
 
     public String getContentType(File f) {
         return getContentType(f.getName());
