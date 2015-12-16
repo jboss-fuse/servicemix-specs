@@ -75,7 +75,9 @@ public class Activator implements BundleActivator, SynchronousBundleListener {
 
     public synchronized void stop(BundleContext bundleContext) throws Exception {
         debugPrintln("deactivating");
-        bundleContext.removeBundleListener(this);
+        if (bundleContext != null) {
+            bundleContext.removeBundleListener(this);
+        }
         while (!factories.isEmpty()) {
             unregister(factories.keySet().iterator().next());
         }
