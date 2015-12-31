@@ -62,6 +62,7 @@
         <module>jsr339-api-m13</module>
         <module>jsr339-api-rc3</module>
         <module>jsr339-api-2.0</module>
+        <module>jsr339-api-2.0.1</module>
         <module>javamail-api-1.4</module>
         <module>activation-api-1.1</module>
         <module>annotation-api-1.2</module>
