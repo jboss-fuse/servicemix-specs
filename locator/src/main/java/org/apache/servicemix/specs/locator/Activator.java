@@ -196,7 +196,7 @@ public class Activator implements BundleActivator, SynchronousBundleListener {
         @Override
         public boolean equals(Object obj) {
             if (obj instanceof BundleFactoryLoader) {
-                return u.equals(((BundleFactoryLoader) obj).u);
+                return u.toExternalForm().equals(((BundleFactoryLoader) obj).u.toExternalForm());
             } else {
                 return false;
             }
