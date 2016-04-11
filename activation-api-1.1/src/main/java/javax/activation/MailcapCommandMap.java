@@ -426,16 +426,17 @@ public class MailcapCommandMap extends CommandMap {
         if (i != -1) {
             mimeType = mimeType.substring(0, i).trim();
         }
+        cmdName = cmdName.toLowerCase();
 
         // search for an exact match
         Map commands = (Map) preferredCommands.get(mimeType);
-        if (commands == null) {
+        if (commands == null || commands.get(cmdName) == null) {
             // then a wild card match
             commands = (Map) preferredCommands.get(getWildcardMimeType(mimeType));
-            if (commands == null) {
+            if (commands == null || commands.get(cmdName) == null) {
                 // then fallback searches, both standard and wild card.
                 commands = (Map) fallbackCommands.get(mimeType);
-                if (commands == null) {
+                if (commands == null || commands.get(cmdName) == null) {
                     commands = (Map) fallbackCommands.get(getWildcardMimeType(mimeType));
                 }
                 if (commands == null) {
@@ -443,7 +444,7 @@ public class MailcapCommandMap extends CommandMap {
                 }
             }
         }
-        return (CommandInfo) commands.get(cmdName.toLowerCase());
+        return (CommandInfo) commands.get(cmdName);
     }
 
     private String getWildcardMimeType(String mimeType) {
