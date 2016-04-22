@@ -84,7 +84,7 @@ public class ScriptEngineManager {
         return getGlobalScope();
     }
 
-    public void setBinding(Bindings bindings) {
+    public void setBindings(Bindings bindings) {
         setGlobalScope(bindings);
     }
 
