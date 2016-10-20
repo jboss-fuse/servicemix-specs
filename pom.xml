@@ -71,6 +71,7 @@
         <module>jsr303-api-1.0.0</module>
         <module>jsr303-api-1.1.0</module>
         <module>jcr-api-2.0</module>
+        <module>jsr370-api-m1</module>
         <module>assembly</module>
     </modules>
 
