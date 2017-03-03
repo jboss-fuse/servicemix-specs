@@ -73,6 +73,7 @@
         <module>jcr-api-2.0</module>
         <module>jsr370-api-m1</module>
         <module>jsr370-api-m4</module>
+        <module>jsr370-api-m5</module>
         <module>assembly</module>
     </modules>
 
