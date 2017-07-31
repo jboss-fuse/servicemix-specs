@@ -262,7 +262,7 @@ final class XPathFactoryFinder {
      * @return null
      *      if it fails. Error messages will be printed by this method. 
      */
-    private XPathFactory createInstance( String className ) {
+     XPathFactory createInstance( String className ) {
         try {
             if (debug) debugPrintln("instanciating "+className);
             Class clazz;
