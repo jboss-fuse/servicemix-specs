@@ -120,7 +120,7 @@ final class FactoryFinder {
             throw new ClassNotFoundException("Provider " + className + " could not be instantiated: " + x, x);
         }
     }
-
+    
     /**
      * Finds the implementation <code>Class</code> object for the given
      * factory name, or if that fails, finds the <code>Class</code> object
@@ -142,10 +142,43 @@ final class FactoryFinder {
      *                                or could not be instantiated
      */
     static Object find(final String factoryId, final String fallbackClassName) throws ClassNotFoundException {
+        return find(factoryId, fallbackClassName, null);
+    }
+    /**
+     * Finds the implementation <code>Class</code> object for the given
+     * factory name, or if that fails, finds the <code>Class</code> object
+     * for the given fallback class name. The arguments supplied MUST be
+     * used in order. If using the first argument is successful, the second
+     * one will not be used.
+     * <P>
+     * This method is package private so that this code can be shared.
+     *
+     * @param factoryId         the name of the factory to find, which is
+     *                          a system property
+     * @param fallbackClassName the implementation class name, which is
+     *                          to be used only if nothing else
+     *                          is found; <code>null</code> to indicate that
+     *                          there is no fallback class name
+     * @param service           The interface class of the service
+     * @return the <code>Class</code> object of the specified message factory;
+     *         may not be <code>null</code>
+     * @throws ClassNotFoundException if the given class could not be found
+     *                                or could not be instantiated
+     */
+    static <T> Object find(final String factoryId, final String fallbackClassName, Class<T> service) throws ClassNotFoundException {
         
         try {
             // If we are deployed into an OSGi environment, leverage it
-            Class factoryClass = FactoryFinder.class.getClassLoader().loadClass(factoryId);
+            Class factoryClass = null;
+            try {
+                factoryClass = FactoryFinder.class.getClassLoader().loadClass(factoryId);
+            } catch (Throwable t) {
+                if (service != null) {
+                    factoryClass = service;
+                } else {
+                    throw t;
+                }
+            }
             Class spiClass = org.apache.servicemix.specs.locator.OsgiLocator.locate(factoryClass, factoryId);
             if (spiClass != null) {
                 return spiClass.newInstance();
